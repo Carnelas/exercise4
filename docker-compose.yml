@@ -1,9 +1,9 @@
 version: "3"
 services:
-  exercise4:
-    build: .
+  exercise3:
+    build: service
     ports:
-     - "9004:9004"
+     - "9001:9001"
   messageapp:
     image: cabify/backend-bootcamp-messageapp
     ports:

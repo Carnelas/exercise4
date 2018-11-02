@@ -1,0 +1,103 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a message app.",
+    "version": "1.0.0",
+    "title": "MessageApp",
+    "termsOfService": "http://localhost:3000/",
+    "contact": {
+      "email": "carnelas@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "petstore.swagger.io",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "message",
+      "description": "Everything about your Messages",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/message": {
+      "post": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Send a message",
+        "description": "",
+        "operationId": "sendMessage",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Message": {
+      "type": "object",
+      "required": [
+        "destination",
+        "body"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "destination": {
+          "type": "string",
+          "example": "Pepe"
+        },
+        "body": {
+          "type": "string",
+          "example": "Mensaje para Pepe"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
