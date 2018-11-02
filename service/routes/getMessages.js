@@ -4,10 +4,9 @@ const Message = require('../models/Message')
 
 /* Esta ruta devuelve todos los mensajes existentes en el servidor
  */
-
-router.get('/', (req, res) => {
-    Message.find()
-        .then(response => res.send(response))
-})
+    router.get('/', (req, res) => {
+        Message.find()
+            .then(response => res.send(response))
+    })
 
 module.exports = router;

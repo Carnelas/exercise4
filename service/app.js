@@ -18,8 +18,12 @@ connectRetry();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//Middlewares
+const sendCredit = require('./routes/sendCredit')
 const sendMessages = require('./routes/sendMessages')
 const getMessages = require('./routes/getMessages');
+
+app.use('/credit', sendCredit)
 app.use('/messages', sendMessages)
 app.use('/messages', getMessages);
 

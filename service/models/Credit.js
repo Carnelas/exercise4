@@ -5,7 +5,7 @@ const creditSchema = new Schema({
   amount: {
     type: Number,
     required: [true, 'Needed'],
-    minNum: 1
+    min: 0
   }
 }, {
     timestamps: {
