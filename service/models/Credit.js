@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const creditSchema = new Schema({
   amount: {
     type: Number,
-    get: v => Math.round(v),
-    set: v => Math.round(v)
+    get: v => Math.floor(v),
+    set: v => Math.floor(v)
   },
 }, {
     timestamps: {
