@@ -18,6 +18,16 @@ connectRetry();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// middlewares
+
+const sendMessages = require('./routes/sendMessages');
+const getMessages = require('./routes/getMessages');
+const sendCredit = require('./routes/sendCredit')
+app.use('/messages', sendMessages);
+app.use('/messages', getMessages);
+app.use('/credit', sendCredit);
+
+
 
 app.listen(9001, () => {
   console.log('listen on port 9001');

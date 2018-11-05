@@ -3,7 +3,7 @@ const router = express.Router();
 const Credit = require('../models/Credit')
 
 //este post subirá el crédito o actualizará el crédito existente
-router.post('/credit', (req, res, next) => {
+router.post('/', (req, res, next) => {
   let newAmount = req.body.amount
   Credit.findOneAndUpdate({
     $inc: {
@@ -19,7 +19,7 @@ router.post('/credit', (req, res, next) => {
 })
 
 // get que devuelve el crédito actual
-router.get('/credit', (req, res, next) => {
+router.get('/', (req, res, next) => {
   Credit.find()
     .then(resp => {
       res.status(200);

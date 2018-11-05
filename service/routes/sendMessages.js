@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const Message = require('../models/Message')
-const Credit = require('../models/Credit')
-
+/* const Credit = require('../models/Credit')
+ */
 /* Post que envia los mensajes. Al enviarse las propiedades "sent" y "confirmed"
-pasan a ser verdaderas */
-router.post('/messages', (req, res, next) => {
+pasan a ser verdaderas.
+Antes de enviarse el mensaje se comprueba si hay crédito disponible.
+*/
+router.post('/', (req, res, next) => {
     let { destination, body } = req.body
     axios.post('http://messageapp:3000/message', { destination, body })
         .then(() => {
@@ -18,7 +20,6 @@ router.post('/messages', (req, res, next) => {
             })
                 .save()
                 .then(message => message)
-                .then(amount - 1)
                 .catch(err => err)
         })
         .then(() => {
@@ -30,6 +31,8 @@ router.post('/messages', (req, res, next) => {
                 .send(e);
         })
 })
+
+
 // falta añadir la parte donde al enviar un mensaje resta crédito
 // la terminaré hoy.
 
