@@ -8,36 +8,51 @@ const Credit = require('../models/Credit')
 pasan a ser verdaderas.
 Antes de enviarse el mensaje se comprueba si hay crédito disponible.
 */
+
 router.post('/', (req, res, next) => {
-    Credit.find()
-    if (amount <= 0) {
-        send("no credit enough")
-    }
-    else {
-        let { destination, body } = req.body
-        axios.post('http://messageapp:3000/message', { destination, body })
-            .then(() => {
-                new Message({
+    Credit.find().then(credit => {
+        saveAmount = credit[0].amount
+        if (saveAmount <= 0) {
+            res.send('no credit enough')
+        }
+        else {
+            let { destination, body } = req.body
+            axios.post('http://messageapp:3000/message',
+                {
                     destination,
-                    body,
-                    sent: true,
-                    confirmed: true
+                    body
                 })
-                    .then(amount - 1)
-                    .save()
-                    .then(message => message)
-                    .catch(err => err)
-            })
-            .then(() => {
-                res.status(200)
-                    .send('succesful');
-            })
-            .catch((e) => {
-                res.status(500)
-                    .send(e);
-            })
-    }
+                .then(() => {
+                    Credit.findOneAndUpdate({
+                        $inc: {
+                            "amount": -1
+                        }
+                    })
+                }).then(() => {
+                    if (saveAmount > 0) {
+                        new Message({
+                            destination,
+                            body,
+                            sent: true,
+                            confirmed: true
+                        })
+                            .save()
+                            .then(message => message)
+                            .catch(err => err)
+                    }
+                })
+                .then(() => {
+                    res.status(200)
+                        .send('succesful');
+                })
+                .catch((e) => {
+                    res.status(500)
+                        .send(e);
+                })
+        }
+    })
 })
+
 
 
 //quite las validaciones para añadirlas con el middleware de validator de express
